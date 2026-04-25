@@ -77,6 +77,11 @@ public class PlayerRespawn : MonoBehaviour
     {
         isRespawning = true;
 
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayDeath();
+        }
+
         if (leftHandGrip != null) leftHandGrip.ForceReleaseForRespawn();
         if (rightHandGrip != null) rightHandGrip.ForceReleaseForRespawn();
 
@@ -96,6 +101,11 @@ public class PlayerRespawn : MonoBehaviour
         else
         {
             transform.position = currentRespawnPosition;
+        }
+
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayRespawn();
         }
 
         yield return new WaitForSeconds(respawnFreezeTime);
