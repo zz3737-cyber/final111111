@@ -120,9 +120,9 @@ public partial class @ClimberInputActions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""OpenShop"",
+                    ""name"": ""Pause"",
                     ""type"": ""Button"",
-                    ""id"": ""f7635a71-bbbc-4480-9be1-39f4d0106a10"",
+                    ""id"": ""44609ecc-9985-4d3f-b98a-8498a3e82338"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -165,12 +165,12 @@ public partial class @ClimberInputActions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""a0799ab5-a688-4f75-abd3-a82c53dbe759"",
-                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""id"": ""9d88013d-365e-4966-ab31-85efd52864f7"",
+                    ""path"": ""<Gamepad>/start"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""OpenShop"",
+                    ""action"": ""Pause"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -252,7 +252,7 @@ public partial class @ClimberInputActions: IInputActionCollection2, IDisposable
         m_PlayerLeft_HandMove = m_PlayerLeft.FindAction("HandMove", throwIfNotFound: true);
         m_PlayerLeft_FootMove = m_PlayerLeft.FindAction("FootMove", throwIfNotFound: true);
         m_PlayerLeft_Grip = m_PlayerLeft.FindAction("Grip", throwIfNotFound: true);
-        m_PlayerLeft_OpenShop = m_PlayerLeft.FindAction("OpenShop", throwIfNotFound: true);
+        m_PlayerLeft_Pause = m_PlayerLeft.FindAction("Pause", throwIfNotFound: true);
         // PlayerRight
         m_PlayerRight = asset.FindActionMap("PlayerRight", throwIfNotFound: true);
         m_PlayerRight_HandMove = m_PlayerRight.FindAction("HandMove", throwIfNotFound: true);
@@ -342,7 +342,7 @@ public partial class @ClimberInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerLeft_HandMove;
     private readonly InputAction m_PlayerLeft_FootMove;
     private readonly InputAction m_PlayerLeft_Grip;
-    private readonly InputAction m_PlayerLeft_OpenShop;
+    private readonly InputAction m_PlayerLeft_Pause;
     /// <summary>
     /// Provides access to input actions defined in input action map "PlayerLeft".
     /// </summary>
@@ -367,9 +367,9 @@ public partial class @ClimberInputActions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Grip => m_Wrapper.m_PlayerLeft_Grip;
         /// <summary>
-        /// Provides access to the underlying input action "PlayerLeft/OpenShop".
+        /// Provides access to the underlying input action "PlayerLeft/Pause".
         /// </summary>
-        public InputAction @OpenShop => m_Wrapper.m_PlayerLeft_OpenShop;
+        public InputAction @Pause => m_Wrapper.m_PlayerLeft_Pause;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -405,9 +405,9 @@ public partial class @ClimberInputActions: IInputActionCollection2, IDisposable
             @Grip.started += instance.OnGrip;
             @Grip.performed += instance.OnGrip;
             @Grip.canceled += instance.OnGrip;
-            @OpenShop.started += instance.OnOpenShop;
-            @OpenShop.performed += instance.OnOpenShop;
-            @OpenShop.canceled += instance.OnOpenShop;
+            @Pause.started += instance.OnPause;
+            @Pause.performed += instance.OnPause;
+            @Pause.canceled += instance.OnPause;
         }
 
         /// <summary>
@@ -428,9 +428,9 @@ public partial class @ClimberInputActions: IInputActionCollection2, IDisposable
             @Grip.started -= instance.OnGrip;
             @Grip.performed -= instance.OnGrip;
             @Grip.canceled -= instance.OnGrip;
-            @OpenShop.started -= instance.OnOpenShop;
-            @OpenShop.performed -= instance.OnOpenShop;
-            @OpenShop.canceled -= instance.OnOpenShop;
+            @Pause.started -= instance.OnPause;
+            @Pause.performed -= instance.OnPause;
+            @Pause.canceled -= instance.OnPause;
         }
 
         /// <summary>
@@ -611,12 +611,12 @@ public partial class @ClimberInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnGrip(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "OpenShop" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Pause" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnOpenShop(InputAction.CallbackContext context);
+        void OnPause(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "PlayerRight" which allows adding and removing callbacks.

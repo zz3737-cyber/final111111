@@ -22,9 +22,7 @@ public class FruitPickup : MonoBehaviour
         PlayerFruitReceiver receiver = other.GetComponent<PlayerFruitReceiver>();
 
         if (receiver == null)
-        {
             receiver = other.GetComponentInParent<PlayerFruitReceiver>();
-        }
 
         if (receiver == null) return;
 
@@ -32,10 +30,12 @@ public class FruitPickup : MonoBehaviour
         {
             case FruitType.ArmStrength:
                 receiver.AddArmStrength(armStrengthBonus);
+                GameManager.instance.ShowText("Arm Strength Up!");
                 break;
 
             case FruitType.Stamina:
                 receiver.AddStamina(staminaBonus);
+                GameManager.instance.ShowText("Stamina Up!");
                 break;
         }
 
