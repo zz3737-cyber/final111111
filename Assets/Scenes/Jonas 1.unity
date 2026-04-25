@@ -325,7 +325,7 @@ PrefabInstance:
     - target: {fileID: 418824845131112424, guid: 45807239f145ff84cba2f34d910d8405, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -5631450683799534807, guid: 0fc2604bf08ca5941976aeb7003ef0f6, type: 3}
+      objectReference: {fileID: -3328740410460549863, guid: 86588f9049d69e346b2950c7819ad5ad, type: 3}
     - target: {fileID: 418824845131112424, guid: 45807239f145ff84cba2f34d910d8405, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -461,7 +461,7 @@ PrefabInstance:
     - target: {fileID: 1623891518808055042, guid: 45807239f145ff84cba2f34d910d8405, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 6272636083031564135, guid: 6db5e0d05e0d4094db9b2a143a26b9b3, type: 3}
+      objectReference: {fileID: 6465341893804762962, guid: 86588f9049d69e346b2950c7819ad5ad, type: 3}
     - target: {fileID: 1623891518808055042, guid: 45807239f145ff84cba2f34d910d8405, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -663,6 +663,14 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3930655389796919823, guid: 45807239f145ff84cba2f34d910d8405, type: 3}
+      propertyPath: m_FlipX
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3930655389796919823, guid: 45807239f145ff84cba2f34d910d8405, type: 3}
+      propertyPath: m_FlipY
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3930655389796919823, guid: 45807239f145ff84cba2f34d910d8405, type: 3}
       propertyPath: m_Size.x
       value: 11.991478
       objectReference: {fileID: 0}
@@ -673,7 +681,7 @@ PrefabInstance:
     - target: {fileID: 3930655389796919823, guid: 45807239f145ff84cba2f34d910d8405, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -4942197161742854921, guid: 04b8f64b101f56547bb3a1566a18119c, type: 3}
+      objectReference: {fileID: 2365989703839771159, guid: 86588f9049d69e346b2950c7819ad5ad, type: 3}
     - target: {fileID: 3930655389796919823, guid: 45807239f145ff84cba2f34d910d8405, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -997,7 +1005,7 @@ PrefabInstance:
     - target: {fileID: 6333858261431010164, guid: 45807239f145ff84cba2f34d910d8405, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 4467198291271582825, guid: ad37c32b3c39ba64f8449e2556ba039f, type: 3}
+      objectReference: {fileID: 4216078571517232276, guid: 86588f9049d69e346b2950c7819ad5ad, type: 3}
     - target: {fileID: 6333858261431010164, guid: 45807239f145ff84cba2f34d910d8405, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -1970,6 +1978,7 @@ RectTransform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 960973706}
+  - {fileID: 1976483042}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -2490,10 +2499,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::LeftSideGamepadBinder
   inputSource: {fileID: 123019972}
-  leftHandLimb: {fileID: 0}
-  leftFootLimb: {fileID: 0}
-  leftHandGrip: {fileID: 0}
-  leftFootPlant: {fileID: 0}
+  leftHandLimb: {fileID: 1628376013}
+  leftFootLimb: {fileID: 1347267229}
+  leftHandGrip: {fileID: 225784752}
+  leftFootPlant: {fileID: 1771150709}
   deadZone: 0.2
 --- !u!4 &123019974
 Transform:
@@ -3188,7 +3197,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 11.981477, y: 9.669999}
+    oldSize: {x: 13.351646, y: 10.89}
     newSize: {x: 11.981477, y: 9.669999}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -3364,7 +3373,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   pickupText: {fileID: 960973707}
-  pausePanel: {fileID: 0}
+  pausePanel: {fileID: 1976483039}
 --- !u!4 &226476938
 Transform:
   m_ObjectHideFlags: 0
@@ -9526,7 +9535,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 10.561301, y: 6.5}
+    oldSize: {x: 11.791453, y: 7.35}
     newSize: {x: 10.561301, y: 6.5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -12291,7 +12300,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: -23.1}
+  m_AnchoredPosition: {x: 0, y: -23.099976}
   m_SizeDelta: {x: 100, y: 25}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &960973707
@@ -12314,7 +12323,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 
+  m_text: Arm strength
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 74637fb2e60011f459f101b7aa5c2461, type: 2}
   m_sharedMaterial: {fileID: 5323542441751524029, guid: 74637fb2e60011f459f101b7aa5c2461, type: 2}
@@ -12323,7 +12332,7 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294967295
+    rgba: 4280492839
   m_fontColor: {r: 0.15471691, g: 0.13866138, b: 0.13866138, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
@@ -15813,7 +15822,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 11.991478, y: 9.65}
+    oldSize: {x: 13.351646, y: 10.89}
     newSize: {x: 11.991478, y: 9.65}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -16417,6 +16426,17 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1347267229 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6303187098466031207, guid: 45807239f145ff84cba2f34d910d8405, type: 3}
+  m_PrefabInstance: {fileID: 9231704}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a84995a1f9f9f114fb5522b566eb6874, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::FourDirectionLimb
 --- !u!1 &1350878555
 GameObject:
   m_ObjectHideFlags: 0
@@ -19188,6 +19208,17 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!114 &1628376013 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8782323766721852048, guid: 45807239f145ff84cba2f34d910d8405, type: 3}
+  m_PrefabInstance: {fileID: 9231704}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a84995a1f9f9f114fb5522b566eb6874, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::LimbFollow
 --- !u!1 &1630781860
 GameObject:
   m_ObjectHideFlags: 0
@@ -20639,7 +20670,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 10.561301, y: 6.19}
+    oldSize: {x: 11.791453, y: 7.35}
     newSize: {x: 10.561301, y: 6.19}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -22252,7 +22283,7 @@ Transform:
   m_GameObject: {fileID: 1964739178}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -32, y: -28.1, z: -10}
+  m_LocalPosition: {x: -31.7, y: -31, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -22791,6 +22822,81 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+--- !u!1 &1976483039
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1976483042}
+  - component: {fileID: 1976483041}
+  - component: {fileID: 1976483040}
+  m_Layer: 5
+  m_Name: Panel
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!114 &1976483040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1976483039}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: UnityEngine.UI::UnityEngine.UI.Image
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 0.9254902}
+  m_RaycastTarget: 1
+  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
+  m_Maskable: 1
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+  m_Sprite: {fileID: 10907, guid: 0000000000000000f000000000000000, type: 0}
+  m_Type: 1
+  m_PreserveAspect: 0
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
+  m_PixelsPerUnitMultiplier: 1
+--- !u!222 &1976483041
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1976483039}
+  m_CullTransparentMesh: 1
+--- !u!224 &1976483042
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1976483039}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.49, y: 0.49, z: 0.49}
+  m_ConstrainProportionsScale: 1
+  m_Children: []
+  m_Father: {fileID: 55586320}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1976719929
 GameObject:
   m_ObjectHideFlags: 0

@@ -36,6 +36,8 @@ public class GameManager : MonoBehaviour
 
     public void ShowText(string message)
     {
+        if (pickupText == null) return;
+
         StopAllCoroutines();
         pickupText.text = message;
         pickupText.gameObject.SetActive(true);
@@ -56,15 +58,5 @@ public class GameManager : MonoBehaviour
             pausePanel.SetActive(isPaused);
 
         Time.timeScale = isPaused ? 0f : 1f;
-    }
-
-    public void ResumeGame()
-    {
-        isPaused = false;
-
-        if (pausePanel != null)
-            pausePanel.SetActive(false);
-
-        Time.timeScale = 1f;
     }
 }

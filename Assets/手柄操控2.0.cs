@@ -166,7 +166,7 @@ public partial class @ClimberInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""9d88013d-365e-4966-ab31-85efd52864f7"",
-                    ""path"": ""<Gamepad>/start"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
