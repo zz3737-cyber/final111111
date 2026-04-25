@@ -39,6 +39,11 @@ public class FruitPickup : MonoBehaviour
                 break;
         }
 
+        if (AudioManager.Instance != null)
+        {
+            AudioManager.Instance.PlayFruitPickup();
+        }
+
         Destroy(gameObject);
     }
 }
