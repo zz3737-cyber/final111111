@@ -3368,7 +3368,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::GameManager
   pickupText: {fileID: 960973707}
-  pausePanel: {fileID: 0}
+  pausePanel: {fileID: 960973705}
 --- !u!4 &226476938
 Transform:
   m_ObjectHideFlags: 0
@@ -25598,3 +25598,4 @@ SceneRoots:
   - {fileID: 285971867}
   - {fileID: 1005195851}
   - {fileID: 1490763075}
+  - {fileID: 226476938}
