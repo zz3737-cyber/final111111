@@ -34,9 +34,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "OpenShop",
+                    "name": "Pause",
                     "type": "Button",
-                    "id": "f7635a71-bbbc-4480-9be1-39f4d0106a10",
+                    "id": "44609ecc-9985-4d3f-b98a-8498a3e82338",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -79,12 +79,12 @@
                 },
                 {
                     "name": "",
-                    "id": "a0799ab5-a688-4f75-abd3-a82c53dbe759",
-                    "path": "<Gamepad>/buttonSouth",
+                    "id": "9d88013d-365e-4966-ab31-85efd52864f7",
+                    "path": "<Gamepad>/start",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "OpenShop",
+                    "action": "Pause",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
