@@ -1,0 +1,163 @@
+{
+    "version": 1,
+    "name": "ClimberControls",
+    "maps": [
+        {
+            "name": "PlayerLeft",
+            "id": "5c40e2a9-0b3c-4455-9bfa-5468a8c0df37",
+            "actions": [
+                {
+                    "name": "HandMove",
+                    "type": "Value",
+                    "id": "4adf7e48-9776-4dc7-a623-8182b97f1a0b",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "FootMove",
+                    "type": "Value",
+                    "id": "4c84a081-816d-4338-b8f8-96da32fd90b4",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "Grip",
+                    "type": "Button",
+                    "id": "5a86cd89-bbcb-41c5-8366-6dab37ed25f0",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "OpenShop",
+                    "type": "Button",
+                    "id": "f7635a71-bbbc-4480-9be1-39f4d0106a10",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "0f62388a-7a9e-4a81-95dd-4e81c0a3230d",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HandMove",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "1eeb8d59-c509-44e6-a3d2-48a0ddf1a58f",
+                    "path": "<Gamepad>/rightStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FootMove",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "369f1c42-9dcb-40db-9f54-c69bc90b08f1",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Grip",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a0799ab5-a688-4f75-abd3-a82c53dbe759",
+                    "path": "<Gamepad>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "OpenShop",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        },
+        {
+            "name": "PlayerRight",
+            "id": "f2a178dd-0997-45d1-b2e0-95c8cf7dfc68",
+            "actions": [
+                {
+                    "name": "HandMove",
+                    "type": "Value",
+                    "id": "81e40ba1-ccf6-45af-b0d8-51f28da74645",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                },
+                {
+                    "name": "FootMove",
+                    "type": "Button",
+                    "id": "58170aa1-4451-484a-8a5a-e47f9ef5b2f2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Grip",
+                    "type": "Button",
+                    "id": "53fe5b48-76c5-4883-894c-2df5e03ec3b2",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "b1f5ed45-70cd-4a54-8dbf-8412fe4d399c",
+                    "path": "<Gamepad>/leftStick",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "HandMove",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b363106d-fb05-4c81-85ed-68cbabda2dea",
+                    "path": "<Gamepad>/rightStick/left",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "FootMove",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "a7d86d68-33cc-4422-874a-4fba1573b6d5",
+                    "path": "<Gamepad>/rightTrigger",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Grip",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
+        }
+    ],
+    "controlSchemes": []
+}
