@@ -127,6 +127,15 @@ public partial class @ClimberInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Select"",
+                    ""type"": ""Button"",
+                    ""id"": ""c7dcdb33-8d63-4a5b-90b7-15df8f0eef05"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -171,6 +180,17 @@ public partial class @ClimberInputActions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""Pause"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d0ecdbe9-9ace-4495-933d-c3d935c6556f"",
+                    ""path"": ""<Gamepad>/buttonSouth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""Select"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -253,6 +273,7 @@ public partial class @ClimberInputActions: IInputActionCollection2, IDisposable
         m_PlayerLeft_FootMove = m_PlayerLeft.FindAction("FootMove", throwIfNotFound: true);
         m_PlayerLeft_Grip = m_PlayerLeft.FindAction("Grip", throwIfNotFound: true);
         m_PlayerLeft_Pause = m_PlayerLeft.FindAction("Pause", throwIfNotFound: true);
+        m_PlayerLeft_Select = m_PlayerLeft.FindAction("Select", throwIfNotFound: true);
         // PlayerRight
         m_PlayerRight = asset.FindActionMap("PlayerRight", throwIfNotFound: true);
         m_PlayerRight_HandMove = m_PlayerRight.FindAction("HandMove", throwIfNotFound: true);
@@ -343,6 +364,7 @@ public partial class @ClimberInputActions: IInputActionCollection2, IDisposable
     private readonly InputAction m_PlayerLeft_FootMove;
     private readonly InputAction m_PlayerLeft_Grip;
     private readonly InputAction m_PlayerLeft_Pause;
+    private readonly InputAction m_PlayerLeft_Select;
     /// <summary>
     /// Provides access to input actions defined in input action map "PlayerLeft".
     /// </summary>
@@ -370,6 +392,10 @@ public partial class @ClimberInputActions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "PlayerLeft/Pause".
         /// </summary>
         public InputAction @Pause => m_Wrapper.m_PlayerLeft_Pause;
+        /// <summary>
+        /// Provides access to the underlying input action "PlayerLeft/Select".
+        /// </summary>
+        public InputAction @Select => m_Wrapper.m_PlayerLeft_Select;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -408,6 +434,9 @@ public partial class @ClimberInputActions: IInputActionCollection2, IDisposable
             @Pause.started += instance.OnPause;
             @Pause.performed += instance.OnPause;
             @Pause.canceled += instance.OnPause;
+            @Select.started += instance.OnSelect;
+            @Select.performed += instance.OnSelect;
+            @Select.canceled += instance.OnSelect;
         }
 
         /// <summary>
@@ -431,6 +460,9 @@ public partial class @ClimberInputActions: IInputActionCollection2, IDisposable
             @Pause.started -= instance.OnPause;
             @Pause.performed -= instance.OnPause;
             @Pause.canceled -= instance.OnPause;
+            @Select.started -= instance.OnSelect;
+            @Select.performed -= instance.OnSelect;
+            @Select.canceled -= instance.OnSelect;
         }
 
         /// <summary>
@@ -617,6 +649,13 @@ public partial class @ClimberInputActions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnPause(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Select" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSelect(InputAction.CallbackContext context);
     }
     /// <summary>
     /// Interface to implement callback methods for all input action callbacks associated with input actions defined by "PlayerRight" which allows adding and removing callbacks.

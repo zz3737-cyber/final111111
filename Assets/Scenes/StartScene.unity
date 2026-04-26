@@ -682,7 +682,7 @@ MonoBehaviour:
     startPos2: {x: 0, y: 0, z: 0}
     endPos2: {x: 0, y: 0, z: 0}
     duration: 0
-  gameSceneName: GameScene
+  gameSceneName: Jonas 1
 --- !u!4 &900617499
 Transform:
   m_ObjectHideFlags: 0
