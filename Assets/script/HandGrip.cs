@@ -17,10 +17,13 @@ public class HandGrip : MonoBehaviour
     public float maxStamina = 10f;
     public float currentStamina = 10f;
     public float drainPerSecond = 1f;
-    public float staminaDrainMultiplier = 1f;
 
     [Header("Regrab Cooldown")]
-    public float regrabCooldown = 0.5f;
+    public float regrabCooldown = 0.2f;
+
+    [Header("Stamina Empty Cooldown")]
+    public float staminaEmptyCooldown = 0.5f;
+
     private float regrabTimer = 0f;
 
     [Header("Grip Disable")]
@@ -83,9 +86,11 @@ public class HandGrip : MonoBehaviour
             regrabTimer -= Time.deltaTime;
         }
 
+        // 开始抓住
         if (gripHeld && candidateHold != null && candidateCollider != null && !isGripping && regrabTimer <= 0f)
         {
             isGripping = true;
+
             currentHold = candidateHold;
             currentHoldCollider = candidateCollider;
             currentHoldType = candidateHoldType;
@@ -93,6 +98,7 @@ public class HandGrip : MonoBehaviour
             currentSlipDirection = candidateSlipDirection;
             currentSlipSpeed = candidateSlipSpeed;
 
+            // 重新抓住时耐力回满
             currentStamina = maxStamina;
 
             if (AudioManager.Instance != null)
@@ -104,20 +110,24 @@ public class HandGrip : MonoBehaviour
             localGripPoint = currentHold.InverseTransformPoint(closestWorldPoint);
         }
 
+        // 主动松手
         if (!gripHeld && isGripping)
         {
-            ReleaseCurrentGrip(true);
+            ReleaseCurrentGrip(regrabCooldown);
             return;
         }
 
+        // 抓住时持续扣耐力
         if (isGripping && currentHold != null)
         {
-            currentStamina -= drainPerSecond * staminaDrainMultiplier * Time.deltaTime;
+            currentStamina -= drainPerSecond * Time.deltaTime;
 
             if (currentStamina <= 0f)
             {
                 currentStamina = 0f;
-                ReleaseCurrentGrip(true);
+
+                // 耐力空了以后，进入专门的 0.5 秒抓取冷却
+                ReleaseCurrentGrip(staminaEmptyCooldown);
                 return;
             }
 
@@ -156,7 +166,7 @@ public class HandGrip : MonoBehaviour
 
         Vector3 nextLocalGripPoint = localGripPoint;
 
-        // 这里用每个滑点自己的速度和方向
+        // 每个滑点自己的速度和方向
         nextLocalGripPoint.x += currentSlipDirection * currentSlipSpeed * Time.deltaTime;
 
         Vector3 desiredWorldPoint = currentHold.TransformPoint(nextLocalGripPoint);
@@ -192,6 +202,7 @@ public class HandGrip : MonoBehaviour
         return shoulderPos + offset.normalized * maxReach;
     }
 
+    // 给 ClimberPhysicsGripMotor 用
     public Vector2 GetConnectedAnchorLocal()
     {
         if (currentHold == null)
@@ -219,18 +230,16 @@ public class HandGrip : MonoBehaviour
         candidateCollider = null;
 
         currentStamina = maxStamina;
+        regrabTimer = 0f;
     }
 
-    void ReleaseCurrentGrip(bool startCooldown)
+    void ReleaseCurrentGrip(float cooldownTime)
     {
         isGripping = false;
         currentHold = null;
         currentHoldCollider = null;
 
-        if (startCooldown)
-        {
-            regrabTimer = regrabCooldown;
-        }
+        regrabTimer = cooldownTime;
     }
 
     void ForceReleaseAll(bool startCooldown)
@@ -267,6 +276,7 @@ public class HandGrip : MonoBehaviour
         {
             candidateHold = null;
             candidateCollider = null;
+
             candidateHoldType = HoldType.Long;
             candidateSlipDirection = 1f;
             candidateSlipSpeed = defaultSlipperySpeed;
@@ -274,7 +284,7 @@ public class HandGrip : MonoBehaviour
 
         if (currentHoldCollider == other)
         {
-            ReleaseCurrentGrip(true);
+            ReleaseCurrentGrip(regrabCooldown);
         }
     }
 
@@ -340,7 +350,6 @@ public class HandGrip : MonoBehaviour
             return true;
         }
 
-        // 没挂 HoldSurface2D 的时候，回退到 Tag
         if (other.CompareTag("LongHandHold"))
         {
             holdType = HoldType.Long;

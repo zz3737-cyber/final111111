@@ -40,11 +40,6 @@ public class ClimberPhysicsGripMotor : MonoBehaviour
     [Header("Vertical Limit")]
     public float minY = -4f;
 
-    [Header("Stamina Drain Multipliers")]
-    public float noFootDrainMultiplier = 1f;
-    public float oneFootDrainMultiplier = 0.4f;
-    public float twoFeetDrainMultiplier = 0.1f;
-
     void Start()
     {
         if (leftJoint != null) leftJoint.enabled = false;
@@ -55,8 +50,6 @@ public class ClimberPhysicsGripMotor : MonoBehaviour
     {
         UpdateJoint(leftHandGrip, leftJoint, leftShoulderPivot, leftArmLength);
         UpdateJoint(rightHandGrip, rightJoint, rightShoulderPivot, rightArmLength);
-
-        UpdateStaminaDrain();
 
         ApplyHandForce();
         ApplyFootForce();
@@ -89,6 +82,7 @@ public class ClimberPhysicsGripMotor : MonoBehaviour
         }
 
         Rigidbody2D holdRb = grip.currentHold.GetComponent<Rigidbody2D>();
+
         if (holdRb == null)
         {
             joint.enabled = false;
@@ -101,8 +95,7 @@ public class ClimberPhysicsGripMotor : MonoBehaviour
         // 身体这一侧的连接点 = 肩膀相对身体的局部位置
         joint.anchor = bodyRb.transform.InverseTransformPoint(shoulderPivot.position);
 
-        // 抓点这一侧的连接点
-        // 普通点仍然连中心；长点/滑点连到实际抓住的位置
+        // 抓点这一侧的连接点 = 实际抓住位置
         joint.connectedAnchor = grip.GetConnectedAnchorLocal();
 
         // 只限制最大长度，不锁死当前位置
@@ -110,37 +103,6 @@ public class ClimberPhysicsGripMotor : MonoBehaviour
         joint.distance = armLength;
 
         joint.enabled = true;
-    }
-
-    void UpdateStaminaDrain()
-    {
-        bool leftFootDown = IsPlanted(leftFootPlant);
-        bool rightFootDown = IsPlanted(rightFootPlant);
-
-        int plantedFeetCount = 0;
-        if (leftFootDown) plantedFeetCount++;
-        if (rightFootDown) plantedFeetCount++;
-
-        float drainMultiplier = noFootDrainMultiplier;
-
-        if (plantedFeetCount == 1)
-        {
-            drainMultiplier = oneFootDrainMultiplier;
-        }
-        else if (plantedFeetCount >= 2)
-        {
-            drainMultiplier = twoFeetDrainMultiplier;
-        }
-
-        if (leftHandGrip != null)
-        {
-            leftHandGrip.staminaDrainMultiplier = drainMultiplier;
-        }
-
-        if (rightHandGrip != null)
-        {
-            rightHandGrip.staminaDrainMultiplier = drainMultiplier;
-        }
     }
 
     void ApplyHandForce()
@@ -216,6 +178,7 @@ public class ClimberPhysicsGripMotor : MonoBehaviour
 
             if (inputDir.magnitude > inputDeadZone)
             {
+                // 脚输入方向反过来：脚往这个方向蹬，身体往反方向走
                 totalForce += (-inputDir.normalized) * footPushForce;
             }
         }
@@ -252,8 +215,10 @@ public class ClimberPhysicsGripMotor : MonoBehaviour
         if (bodyRb == null) return;
 
         Vector2 v = bodyRb.linearVelocity;
+
         v.x = Mathf.Clamp(v.x, -maxVelocity, maxVelocity);
         v.y = Mathf.Clamp(v.y, -maxVelocity, maxVelocity);
+
         bodyRb.linearVelocity = v;
     }
 
@@ -269,6 +234,7 @@ public class ClimberPhysicsGripMotor : MonoBehaviour
             bodyRb.position = pos;
 
             Vector2 vel = bodyRb.linearVelocity;
+
             if (vel.y < 0f)
             {
                 vel.y = 0f;
