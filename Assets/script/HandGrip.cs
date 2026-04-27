@@ -27,29 +27,34 @@ public class HandGrip : MonoBehaviour
     public bool gripDisabled = false;
     private float gripDisableTimer = 0f;
 
-    [Header("Slippery Hold")]
-    public float slipperySpeed = 0.5f;
+    [Header("Default Slippery Hold")]
+    public float defaultSlipperySpeed = 0.2f;
 
     [Header("Reach Limit")]
     public Transform shoulderPivot;
     public float maxReach = 1.5f;
 
     private Transform candidateHold;
+    private Collider2D candidateCollider;
 
     private enum HoldType
     {
-        Normal,
         Long,
         Slippery
     }
 
-    private HoldType candidateHoldType = HoldType.Normal;
-    private HoldType currentHoldType = HoldType.Normal;
+    private HoldType candidateHoldType = HoldType.Long;
+    private HoldType currentHoldType = HoldType.Long;
 
     private Collider2D currentHoldCollider;
 
     private Vector3 localGripPoint;
+
+    private float candidateSlipDirection = 1f;
+    private float candidateSlipSpeed = 0.2f;
+
     private float currentSlipDirection = 1f;
+    private float currentSlipSpeed = 0.2f;
 
     void Start()
     {
@@ -78,11 +83,15 @@ public class HandGrip : MonoBehaviour
             regrabTimer -= Time.deltaTime;
         }
 
-        if (gripHeld && candidateHold != null && !isGripping && regrabTimer <= 0f)
+        if (gripHeld && candidateHold != null && candidateCollider != null && !isGripping && regrabTimer <= 0f)
         {
             isGripping = true;
             currentHold = candidateHold;
+            currentHoldCollider = candidateCollider;
             currentHoldType = candidateHoldType;
+
+            currentSlipDirection = candidateSlipDirection;
+            currentSlipSpeed = candidateSlipSpeed;
 
             currentStamina = maxStamina;
 
@@ -91,25 +100,8 @@ public class HandGrip : MonoBehaviour
                 AudioManager.Instance.PlayHandGrab();
             }
 
-            if (currentHoldType == HoldType.Long || currentHoldType == HoldType.Slippery)
-            {
-                currentHoldCollider = currentHold.GetComponent<Collider2D>();
-
-                if (currentHoldCollider != null)
-                {
-                    Vector3 closestWorldPoint = currentHoldCollider.ClosestPoint(transform.position);
-                    localGripPoint = currentHold.InverseTransformPoint(closestWorldPoint);
-                }
-                else
-                {
-                    currentHoldType = HoldType.Normal;
-                    currentHoldCollider = null;
-                }
-            }
-            else
-            {
-                currentHoldCollider = null;
-            }
+            Vector3 closestWorldPoint = currentHoldCollider.ClosestPoint(transform.position);
+            localGripPoint = currentHold.InverseTransformPoint(closestWorldPoint);
         }
 
         if (!gripHeld && isGripping)
@@ -131,43 +123,49 @@ public class HandGrip : MonoBehaviour
 
             switch (currentHoldType)
             {
-                case HoldType.Normal:
-                    transform.position = currentHold.position;
-                    break;
-
                 case HoldType.Long:
-                    if (currentHoldCollider == null)
-                    {
-                        ForceReleaseAll(true);
-                        return;
-                    }
-
-                    Vector3 longTarget = currentHold.TransformPoint(localGripPoint);
-                    transform.position = ClampToReach(longTarget);
+                    UpdateLongGrip();
                     break;
 
                 case HoldType.Slippery:
-                    if (currentHoldCollider == null)
-                    {
-                        ForceReleaseAll(true);
-                        return;
-                    }
-
                     UpdateSlipperyGrip();
                     break;
             }
         }
     }
 
+    void UpdateLongGrip()
+    {
+        if (currentHoldCollider == null)
+        {
+            ForceReleaseAll(true);
+            return;
+        }
+
+        Vector3 target = currentHold.TransformPoint(localGripPoint);
+        transform.position = ClampToReach(target);
+    }
+
     void UpdateSlipperyGrip()
     {
+        if (currentHoldCollider == null)
+        {
+            ForceReleaseAll(true);
+            return;
+        }
+
         Vector3 nextLocalGripPoint = localGripPoint;
-        nextLocalGripPoint.x += currentSlipDirection * slipperySpeed * Time.deltaTime;
+
+        // 这里用每个滑点自己的速度和方向
+        nextLocalGripPoint.x += currentSlipDirection * currentSlipSpeed * Time.deltaTime;
 
         Vector3 desiredWorldPoint = currentHold.TransformPoint(nextLocalGripPoint);
+
+        // 支持 PolygonCollider2D，把目标点拉回 collider 表面
         Vector3 surfaceWorldPoint = currentHoldCollider.ClosestPoint(desiredWorldPoint);
 
         Vector3 slipperyTarget = surfaceWorldPoint;
+
         transform.position = ClampToReach(slipperyTarget);
 
         if (shoulderPivot == null || Vector2.Distance(shoulderPivot.position, slipperyTarget) <= maxReach)
@@ -201,12 +199,7 @@ public class HandGrip : MonoBehaviour
             return Vector2.zero;
         }
 
-        if (currentHoldType == HoldType.Long || currentHoldType == HoldType.Slippery)
-        {
-            return localGripPoint;
-        }
-
-        return Vector2.zero;
+        return localGripPoint;
     }
 
     public void DisableGrip(float duration)
@@ -220,10 +213,10 @@ public class HandGrip : MonoBehaviour
     {
         isGripping = false;
         currentHold = null;
-        currentHoldType = HoldType.Normal;
         currentHoldCollider = null;
+
         candidateHold = null;
-        candidateHoldType = HoldType.Normal;
+        candidateCollider = null;
 
         currentStamina = maxStamina;
     }
@@ -232,7 +225,6 @@ public class HandGrip : MonoBehaviour
     {
         isGripping = false;
         currentHold = null;
-        currentHoldType = HoldType.Normal;
         currentHoldCollider = null;
 
         if (startCooldown)
@@ -245,11 +237,10 @@ public class HandGrip : MonoBehaviour
     {
         isGripping = false;
         currentHold = null;
-        currentHoldType = HoldType.Normal;
         currentHoldCollider = null;
 
         candidateHold = null;
-        candidateHoldType = HoldType.Normal;
+        candidateCollider = null;
 
         if (startCooldown)
         {
@@ -259,74 +250,136 @@ public class HandGrip : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        if (TryReadHoldSurface(other, out HoldType holdType, out float slipDirection))
-        {
-            candidateHold = other.transform;
-            candidateHoldType = holdType;
-            currentSlipDirection = slipDirection;
-            return;
-        }
+        TrySetCandidate(other);
+    }
 
-        if (other.CompareTag("HandHold"))
+    void OnTriggerStay2D(Collider2D other)
+    {
+        if (!isGripping && candidateHold == null)
         {
-            candidateHold = other.transform;
-            candidateHoldType = HoldType.Normal;
-            currentSlipDirection = 1f;
-        }
-        else if (other.CompareTag("LongHandHold"))
-        {
-            candidateHold = other.transform;
-            candidateHoldType = HoldType.Long;
-            currentSlipDirection = 1f;
-        }
-        else if (other.CompareTag("SlipperyHandHold"))
-        {
-            candidateHold = other.transform;
-            candidateHoldType = HoldType.Slippery;
-            currentSlipDirection = 1f;
+            TrySetCandidate(other);
         }
     }
 
     void OnTriggerExit2D(Collider2D other)
     {
-        if (candidateHold == other.transform)
+        if (candidateCollider == other)
         {
             candidateHold = null;
-            candidateHoldType = HoldType.Normal;
+            candidateCollider = null;
+            candidateHoldType = HoldType.Long;
+            candidateSlipDirection = 1f;
+            candidateSlipSpeed = defaultSlipperySpeed;
         }
 
-        if (currentHold == other.transform)
+        if (currentHoldCollider == other)
         {
             ReleaseCurrentGrip(true);
         }
     }
 
-    bool TryReadHoldSurface(Collider2D other, out HoldType holdType, out float slipDirection)
+    void TrySetCandidate(Collider2D other)
     {
-        holdType = HoldType.Normal;
-        slipDirection = 1f;
+        if (isGripping) return;
 
-        HoldSurface2D surface = other.GetComponent<HoldSurface2D>();
-        if (surface == null) return false;
+        HoldType holdType;
+        Transform holdRoot;
+        float slipDirection;
+        float slipSpeed;
 
-        switch (surface.holdType)
+        if (!TryGetHoldInfo(other, out holdType, out holdRoot, out slipDirection, out slipSpeed))
         {
-            case HoldSurfaceType.Normal:
-                holdType = HoldType.Normal;
-                break;
-
-            case HoldSurfaceType.Long:
-                holdType = HoldType.Long;
-                break;
-
-            case HoldSurfaceType.Slippery:
-                holdType = HoldType.Slippery;
-                break;
+            return;
         }
 
-        slipDirection = Mathf.Sign(surface.slipperyDirection);
-        if (slipDirection == 0f) slipDirection = 1f;
+        candidateHold = holdRoot;
+        candidateCollider = other;
+        candidateHoldType = holdType;
+        candidateSlipDirection = slipDirection;
+        candidateSlipSpeed = slipSpeed;
+    }
 
-        return true;
+    bool TryGetHoldInfo(
+        Collider2D other,
+        out HoldType holdType,
+        out Transform holdRoot,
+        out float slipDirection,
+        out float slipSpeed
+    )
+    {
+        holdType = HoldType.Long;
+        holdRoot = null;
+        slipDirection = 1f;
+        slipSpeed = defaultSlipperySpeed;
+
+        HoldSurface2D surface = other.GetComponent<HoldSurface2D>();
+
+        if (surface == null)
+        {
+            surface = other.GetComponentInParent<HoldSurface2D>();
+        }
+
+        if (surface != null)
+        {
+            holdRoot = surface.transform;
+
+            if (surface.holdType == HoldSurfaceType.Slippery)
+            {
+                holdType = HoldType.Slippery;
+            }
+            else
+            {
+                holdType = HoldType.Long;
+            }
+
+            slipDirection = Mathf.Sign(surface.slipperyDirection);
+            if (slipDirection == 0f) slipDirection = 1f;
+
+            slipSpeed = Mathf.Max(0f, surface.slipperySpeed);
+
+            return true;
+        }
+
+        // 没挂 HoldSurface2D 的时候，回退到 Tag
+        if (other.CompareTag("LongHandHold"))
+        {
+            holdType = HoldType.Long;
+            holdRoot = other.transform;
+            return true;
+        }
+
+        if (other.CompareTag("SlipperyHandHold"))
+        {
+            holdType = HoldType.Slippery;
+            holdRoot = other.transform;
+            slipDirection = 1f;
+            slipSpeed = defaultSlipperySpeed;
+            return true;
+        }
+
+        Transform parent = other.transform.parent;
+
+        while (parent != null)
+        {
+            if (parent.CompareTag("LongHandHold"))
+            {
+                holdType = HoldType.Long;
+                holdRoot = parent;
+                return true;
+            }
+
+            if (parent.CompareTag("SlipperyHandHold"))
+            {
+                holdType = HoldType.Slippery;
+                holdRoot = parent;
+                slipDirection = 1f;
+                slipSpeed = defaultSlipperySpeed;
+                return true;
+            }
+
+            parent = parent.parent;
+        }
+
+        return false;
     }
 }

@@ -2,15 +2,18 @@ using UnityEngine;
 
 public enum HoldSurfaceType
 {
-    Normal,
     Long,
     Slippery
 }
 
 public class HoldSurface2D : MonoBehaviour
 {
-    public HoldSurfaceType holdType = HoldSurfaceType.Normal;
+    [Header("Hold Type")]
+    public HoldSurfaceType holdType = HoldSurfaceType.Long;
 
-    [Tooltip("滑点沿抓点本地 X 轴滑动。1 = 向右，-1 = 向左")]
+    [Header("Slippery Settings")]
+    public float slipperySpeed = 0.2f;
+
+    [Tooltip("1 = 向本地右边滑，-1 = 向本地左边滑")]
     public float slipperyDirection = 1f;
 }
