@@ -16,17 +16,8 @@ public class Checkpoint : MonoBehaviour
         if (respawn == null) return;
 
         respawn.SetRespawnPoint(transform.position);
+        activated = true;
 
-        if (!activated)
-        {
-            activated = true;
-
-            if (AudioManager.Instance != null)
-            {
-                AudioManager.Instance.PlayCheckpoint();
-            }
-
-            Debug.Log("Checkpoint activated: " + gameObject.name);
-        }
+        Debug.Log("Checkpoint activated: " + gameObject.name);
     }
 }

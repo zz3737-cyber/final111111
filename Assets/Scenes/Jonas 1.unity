@@ -325,7 +325,7 @@ PrefabInstance:
     - target: {fileID: 418824845131112424, guid: 45807239f145ff84cba2f34d910d8405, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -3328740410460549863, guid: 86588f9049d69e346b2950c7819ad5ad, type: 3}
+      objectReference: {fileID: -5631450683799534807, guid: 0fc2604bf08ca5941976aeb7003ef0f6, type: 3}
     - target: {fileID: 418824845131112424, guid: 45807239f145ff84cba2f34d910d8405, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -461,7 +461,7 @@ PrefabInstance:
     - target: {fileID: 1623891518808055042, guid: 45807239f145ff84cba2f34d910d8405, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 6465341893804762962, guid: 86588f9049d69e346b2950c7819ad5ad, type: 3}
+      objectReference: {fileID: 6272636083031564135, guid: 6db5e0d05e0d4094db9b2a143a26b9b3, type: 3}
     - target: {fileID: 1623891518808055042, guid: 45807239f145ff84cba2f34d910d8405, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -663,6 +663,7 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3930655389796919823, guid: 45807239f145ff84cba2f34d910d8405, type: 3}
+<<<<<<< HEAD
       propertyPath: m_FlipX
       value: 1
       objectReference: {fileID: 0}
@@ -671,6 +672,8 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3930655389796919823, guid: 45807239f145ff84cba2f34d910d8405, type: 3}
+=======
+>>>>>>> parent of 86606de (1)
       propertyPath: m_Size.x
       value: 11.991478
       objectReference: {fileID: 0}
@@ -681,7 +684,7 @@ PrefabInstance:
     - target: {fileID: 3930655389796919823, guid: 45807239f145ff84cba2f34d910d8405, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 2365989703839771159, guid: 86588f9049d69e346b2950c7819ad5ad, type: 3}
+      objectReference: {fileID: -4942197161742854921, guid: 04b8f64b101f56547bb3a1566a18119c, type: 3}
     - target: {fileID: 3930655389796919823, guid: 45807239f145ff84cba2f34d910d8405, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -1005,7 +1008,7 @@ PrefabInstance:
     - target: {fileID: 6333858261431010164, guid: 45807239f145ff84cba2f34d910d8405, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 4216078571517232276, guid: 86588f9049d69e346b2950c7819ad5ad, type: 3}
+      objectReference: {fileID: 4467198291271582825, guid: ad37c32b3c39ba64f8449e2556ba039f, type: 3}
     - target: {fileID: 6333858261431010164, guid: 45807239f145ff84cba2f34d910d8405, type: 3}
       propertyPath: m_Color.b
       value: 1
@@ -3334,7 +3337,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 13.351646, y: 10.89}
+    oldSize: {x: 11.981477, y: 9.669999}
     newSize: {x: 11.981477, y: 9.669999}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -9921,7 +9924,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 11.791453, y: 7.35}
+    oldSize: {x: 10.561301, y: 6.5}
     newSize: {x: 10.561301, y: 6.5}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -12987,6 +12990,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+<<<<<<< HEAD
 --- !u!1 &999102671
 GameObject:
   m_ObjectHideFlags: 0
@@ -13027,6 +13031,8 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+=======
+>>>>>>> parent of 86606de (1)
 --- !u!1 &1005342577
 GameObject:
   m_ObjectHideFlags: 0
@@ -16958,7 +16964,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 13.351646, y: 10.89}
+    oldSize: {x: 11.991478, y: 9.65}
     newSize: {x: 11.991478, y: 9.65}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -19697,6 +19703,7 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 523198384534610323, guid: 45807239f145ff84cba2f34d910d8405, type: 3}
   m_PrefabInstance: {fileID: 9231704}
   m_PrefabAsset: {fileID: 0}
+<<<<<<< HEAD
 --- !u!1 &1490763071
 GameObject:
   m_ObjectHideFlags: 0
@@ -19900,6 +19907,8 @@ RectTransform:
   m_AnchoredPosition: {x: -39.81, y: 128.06}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+=======
+>>>>>>> parent of 86606de (1)
 --- !u!1 &1511730215
 GameObject:
   m_ObjectHideFlags: 0
@@ -20369,6 +20378,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+<<<<<<< HEAD
 --- !u!1 &1550868852
 GameObject:
   m_ObjectHideFlags: 0
@@ -20772,6 +20782,8 @@ RectTransform:
   m_AnchoredPosition: {x: -39.81, y: 128.06}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+=======
+>>>>>>> parent of 86606de (1)
 --- !u!1 &1592975911
 GameObject:
   m_ObjectHideFlags: 0
@@ -22144,7 +22156,7 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 1.28086, y: -0.22809839}
+  m_Offset: {x: 0, y: 0}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0, y: 0}
@@ -22154,7 +22166,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 3.56172, y: 2.2984056}
+  m_Size: {x: 1, y: 1}
   m_EdgeRadius: 0
 --- !u!4 &1732826425
 Transform:
@@ -22165,7 +22177,7 @@ Transform:
   m_GameObject: {fileID: 1732826422}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -19.6, y: -1.7, z: 0}
+  m_LocalPosition: {x: -31.82, y: -35.95, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -22907,7 +22919,7 @@ PolygonCollider2D:
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 11.791453, y: 7.35}
+    oldSize: {x: 10.561301, y: 6.19}
     newSize: {x: 10.561301, y: 6.19}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
@@ -26873,6 +26885,7 @@ SpriteRenderer:
   m_SpriteTileMode: 0
   m_WasSpriteAssigned: 1
   m_SpriteSortPoint: 0
+<<<<<<< HEAD
 --- !u!114 &2088532227
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -26974,6 +26987,8 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+=======
+>>>>>>> parent of 86606de (1)
 --- !u!1 &2104937196
 GameObject:
   m_ObjectHideFlags: 0
@@ -27701,6 +27716,7 @@ SceneRoots:
   - {fileID: 123019974}
   - {fileID: 151380530}
   - {fileID: 1732826425}
+<<<<<<< HEAD
   - {fileID: 1556889424}
   - {fileID: 1124363957}
   - {fileID: 9231704}
@@ -27709,3 +27725,8 @@ SceneRoots:
   - {fileID: 1490763075}
   - {fileID: 892236087}
   - {fileID: 167576670}
+=======
+  - {fileID: 1124363957}
+  - {fileID: 9231704}
+  - {fileID: 285971867}
+>>>>>>> parent of 86606de (1)

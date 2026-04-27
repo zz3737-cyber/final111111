@@ -34,6 +34,13 @@ public class HandGrip : MonoBehaviour
     public Transform shoulderPivot;
     public float maxReach = 1.5f;
 
+    public void ForceReleaseForRespawn()
+{
+    isGripping = false;
+    currentHold = null;
+    currentStamina = maxStamina;
+}
+
     private Transform candidateHold;
 
     private enum HoldType
@@ -46,9 +53,13 @@ public class HandGrip : MonoBehaviour
     private HoldType candidateHoldType = HoldType.Normal;
     private HoldType currentHoldType = HoldType.Normal;
 
+    // 这里改成通用 Collider2D
     private Collider2D currentHoldCollider;
 
+    // 长点 / 滑点记录抓住时的局部位置
     private Vector3 localGripPoint;
+
+    // 滑点方向
     private float currentSlipDirection = 1f;
 
     void Start()
@@ -63,7 +74,6 @@ public class HandGrip : MonoBehaviour
         if (gripDisabled)
         {
             gripDisableTimer -= Time.deltaTime;
-
             if (gripDisableTimer <= 0f)
             {
                 gripDisabled = false;
@@ -78,18 +88,15 @@ public class HandGrip : MonoBehaviour
             regrabTimer -= Time.deltaTime;
         }
 
+        // 开始抓住
         if (gripHeld && candidateHold != null && !isGripping && regrabTimer <= 0f)
         {
             isGripping = true;
             currentHold = candidateHold;
             currentHoldType = candidateHoldType;
 
+            // 重新抓住时耐力回满
             currentStamina = maxStamina;
-
-            if (AudioManager.Instance != null)
-            {
-                AudioManager.Instance.PlayHandGrab();
-            }
 
             if (currentHoldType == HoldType.Long || currentHoldType == HoldType.Slippery)
             {
@@ -97,6 +104,7 @@ public class HandGrip : MonoBehaviour
 
                 if (currentHoldCollider != null)
                 {
+                    // 记录抓点表面离手最近的位置，而不是中心
                     Vector3 closestWorldPoint = currentHoldCollider.ClosestPoint(transform.position);
                     localGripPoint = currentHold.InverseTransformPoint(closestWorldPoint);
                 }
@@ -112,12 +120,14 @@ public class HandGrip : MonoBehaviour
             }
         }
 
+        // 主动松手
         if (!gripHeld && isGripping)
         {
             ReleaseCurrentGrip(true);
             return;
         }
 
+        // 抓住时持续耗耐力
         if (isGripping && currentHold != null)
         {
             currentStamina -= drainPerSecond * staminaDrainMultiplier * Time.deltaTime;
@@ -142,6 +152,7 @@ public class HandGrip : MonoBehaviour
                         return;
                     }
 
+                    // 长点：固定在抓住时的那个位置
                     Vector3 longTarget = currentHold.TransformPoint(localGripPoint);
                     transform.position = ClampToReach(longTarget);
                     break;
@@ -161,15 +172,22 @@ public class HandGrip : MonoBehaviour
 
     void UpdateSlipperyGrip()
     {
+        // 通用 Collider2D 没有 size/offset，最简单稳定的做法：
+        // 先沿本地 X 滑，再用 ClosestPoint 吸回表面
         Vector3 nextLocalGripPoint = localGripPoint;
         nextLocalGripPoint.x += currentSlipDirection * slipperySpeed * Time.deltaTime;
 
         Vector3 desiredWorldPoint = currentHold.TransformPoint(nextLocalGripPoint);
+
+        // 拉回抓点表面
         Vector3 surfaceWorldPoint = currentHoldCollider.ClosestPoint(desiredWorldPoint);
 
         Vector3 slipperyTarget = surfaceWorldPoint;
+
+        // 不让手臂被拉长
         transform.position = ClampToReach(slipperyTarget);
 
+        // 只有目标点仍在可达范围内，才推进滑动记录
         if (shoulderPivot == null || Vector2.Distance(shoulderPivot.position, slipperyTarget) <= maxReach)
         {
             localGripPoint = currentHold.InverseTransformPoint(surfaceWorldPoint);
@@ -187,24 +205,20 @@ public class HandGrip : MonoBehaviour
         float dist = offset.magnitude;
 
         if (dist <= maxReach)
-        {
             return targetWorldPos;
-        }
 
         return shoulderPos + offset.normalized * maxReach;
     }
 
+    // 给 ClimberPhysicsGripMotor 用
+    // 普通点返回中心，长点/滑点返回实际抓住位置
     public Vector2 GetConnectedAnchorLocal()
     {
         if (currentHold == null)
-        {
             return Vector2.zero;
-        }
 
         if (currentHoldType == HoldType.Long || currentHoldType == HoldType.Slippery)
-        {
             return localGripPoint;
-        }
 
         return Vector2.zero;
     }
@@ -214,18 +228,6 @@ public class HandGrip : MonoBehaviour
         gripDisabled = true;
         gripDisableTimer = duration;
         ForceReleaseAll(false);
-    }
-
-    public void ForceReleaseForRespawn()
-    {
-        isGripping = false;
-        currentHold = null;
-        currentHoldType = HoldType.Normal;
-        currentHoldCollider = null;
-        candidateHold = null;
-        candidateHoldType = HoldType.Normal;
-
-        currentStamina = maxStamina;
     }
 
     void ReleaseCurrentGrip(bool startCooldown)
@@ -314,11 +316,9 @@ public class HandGrip : MonoBehaviour
             case HoldSurfaceType.Normal:
                 holdType = HoldType.Normal;
                 break;
-
             case HoldSurfaceType.Long:
                 holdType = HoldType.Long;
                 break;
-
             case HoldSurfaceType.Slippery:
                 holdType = HoldType.Slippery;
                 break;
