@@ -11,8 +11,8 @@ public class FootPlant : MonoBehaviour
 
     [Header("Settings")]
     public float maxLegStretch = 1.8f;
-    public float detachInputThreshold = 0.7f;
-    public float minLockTime = 0.12f;
+    public float detachInputThreshold = 0.85f;
+    public float minLockTime = 0.25f;
 
     [Header("External Input")]
     public bool useExternalInput = false;
@@ -34,13 +34,12 @@ public class FootPlant : MonoBehaviour
 
     private enum FootHoldType
     {
-        Normal,
         Long,
         Slippery
     }
 
-    private FootHoldType candidateHoldType = FootHoldType.Normal;
-    private FootHoldType currentHoldType = FootHoldType.Normal;
+    private FootHoldType candidateHoldType = FootHoldType.Long;
+    private FootHoldType currentHoldType = FootHoldType.Long;
 
     private Collider2D currentHoldCollider;
     private Vector3 localFootPoint;
@@ -49,104 +48,110 @@ public class FootPlant : MonoBehaviour
     {
         Vector2 inputDir = GetInputDirection();
 
-        // 还没踩住时，碰到候选点就自动吸附
+        // 还没踩住时，碰到候选长点 / 滑点就自动吸附
         if (candidateFootHold != null && candidateFootCollider != null && !isPlanted)
         {
-            isPlanted = true;
-            currentFootHold = candidateFootHold;
-            currentHoldCollider = candidateFootCollider;
-            currentHoldType = candidateHoldType;
-            plantedTime = Time.time;
-
-            if (debugLog)
-            {
-                Debug.Log($"{name} planted on {currentFootHold.name}, type = {currentHoldType}, collider = {currentHoldCollider.GetType().Name}");
-            }
-
-            if (currentHoldType == FootHoldType.Long || currentHoldType == FootHoldType.Slippery)
-            {
-                // 关键：直接用 OnTriggerEnter/Stay 碰到的 collider，不再 GetComponent<BoxCollider2D>
-                Vector3 closestWorldPoint = currentHoldCollider.ClosestPoint(transform.position);
-                localFootPoint = currentFootHold.InverseTransformPoint(closestWorldPoint);
-            }
+            PlantFoot();
         }
 
         if (isPlanted && currentFootHold != null)
         {
-            switch (currentHoldType)
+            UpdatePlantedPosition();
+
+            CheckLegStretch();
+
+            CheckInputDetach(inputDir);
+        }
+    }
+
+    void PlantFoot()
+    {
+        isPlanted = true;
+
+        currentFootHold = candidateFootHold;
+        currentHoldCollider = candidateFootCollider;
+        currentHoldType = candidateHoldType;
+        plantedTime = Time.time;
+
+        // 关键：用实际碰到的 Collider2D 算最近表面点
+        // 这样 PolygonCollider2D / BoxCollider2D 都能用
+        Vector3 closestWorldPoint = currentHoldCollider.ClosestPoint(transform.position);
+
+        // 记录在 holdRoot 的局部坐标里
+        // 如果 Tag 在父物体上，Collider 在子物体上，也能跟随父物体
+        localFootPoint = currentFootHold.InverseTransformPoint(closestWorldPoint);
+
+        if (debugLog)
+        {
+            Debug.Log(
+                $"{name} planted on {currentFootHold.name}, " +
+                $"type = {currentHoldType}, " +
+                $"collider = {currentHoldCollider.GetType().Name}, " +
+                $"worldPoint = {closestWorldPoint}"
+            );
+        }
+    }
+
+    void UpdatePlantedPosition()
+    {
+        if (currentHoldCollider == null)
+        {
+            ReleaseFoot();
+            return;
+        }
+
+        // 长点 / 滑点：脚固定在实际踩到的位置，不吸到中心
+        transform.position = currentFootHold.TransformPoint(localFootPoint);
+    }
+
+    void CheckLegStretch()
+    {
+        if (hipPivot == null) return;
+
+        float dist = Vector2.Distance(hipPivot.position, transform.position);
+
+        if (dist > maxLegStretch)
+        {
+            if (debugLog)
             {
-                case FootHoldType.Normal:
-                    // 普通点仍然吸中心
-                    transform.position = currentFootHold.position;
-                    break;
-
-                case FootHoldType.Long:
-                case FootHoldType.Slippery:
-                    if (currentHoldCollider == null)
-                    {
-                        ReleaseFoot();
-                        return;
-                    }
-
-                    // 长点 / 斜边 / PolygonCollider2D：吸在实际碰到的位置
-                    transform.position = currentFootHold.TransformPoint(localFootPoint);
-                    break;
+                Debug.Log($"{name} released because leg stretched too far. Distance = {dist}");
             }
 
-            // 腿拉太长自动脱离
-            if (hipPivot != null)
+            ReleaseFoot();
+        }
+    }
+
+    void CheckInputDetach(Vector2 inputDir)
+    {
+        // 刚吸上的一小段时间内不允许因为输入立刻脱离
+        if (Time.time - plantedTime <= minLockTime) return;
+
+        if (inputDir.magnitude <= 0.2f) return;
+        if (hipPivot == null) return;
+
+        Vector2 footToHip = ((Vector2)hipPivot.position - (Vector2)transform.position).normalized;
+
+        float dot = Vector2.Dot(inputDir.normalized, footToHip);
+
+        if (dot > detachInputThreshold)
+        {
+            if (debugLog)
             {
-                float dist = Vector2.Distance(hipPivot.position, transform.position);
-
-                if (dist > maxLegStretch)
-                {
-                    if (debugLog)
-                    {
-                        Debug.Log($"{name} released because leg stretched too far. Distance = {dist}");
-                    }
-
-                    ReleaseFoot();
-                    return;
-                }
+                Debug.Log($"{name} released by input. Dot = {dot}");
             }
 
-            // 玩家明显想把脚收回来时自动脱离
-            if (Time.time - plantedTime > minLockTime)
-            {
-                Vector2 footToHip = Vector2.zero;
-
-                if (hipPivot != null)
-                {
-                    footToHip = ((Vector2)hipPivot.position - (Vector2)transform.position).normalized;
-                }
-
-                if (inputDir.magnitude > 0.2f)
-                {
-                    float dot = Vector2.Dot(inputDir.normalized, footToHip);
-
-                    if (dot > detachInputThreshold)
-                    {
-                        if (debugLog)
-                        {
-                            Debug.Log($"{name} released by input. Dot = {dot}");
-                        }
-
-                        ReleaseFoot();
-                        return;
-                    }
-                }
-            }
+            ReleaseFoot();
         }
     }
 
     Vector2 GetInputDirection()
     {
+        Vector2 inputDir = Vector2.zero;
+
         if (useExternalInput)
         {
-            return externalInput;
+            inputDir += externalInput;
         }
-
-        Vector2 inputDir = Vector2.zero;
 
         if (Input.GetKey(upKey)) inputDir += Vector2.up;
         if (Input.GetKey(downKey)) inputDir += Vector2.down;
@@ -176,7 +181,7 @@ public class FootPlant : MonoBehaviour
         {
             candidateFootHold = null;
             candidateFootCollider = null;
-            candidateHoldType = FootHoldType.Normal;
+            candidateHoldType = FootHoldType.Long;
 
             if (debugLog)
             {
@@ -201,23 +206,20 @@ public class FootPlant : MonoBehaviour
 
         if (debugLog)
         {
-            Debug.Log($"{name} found candidate {candidateFootHold.name}, type = {candidateHoldType}, collider = {other.GetType().Name}");
+            Debug.Log(
+                $"{name} found candidate {candidateFootHold.name}, " +
+                $"type = {candidateHoldType}, " +
+                $"collider = {other.GetType().Name}"
+            );
         }
     }
 
     bool TryGetHoldInfo(Collider2D other, out FootHoldType holdType, out Transform holdRoot)
     {
-        holdType = FootHoldType.Normal;
+        holdType = FootHoldType.Long;
         holdRoot = null;
 
         // 先检查 collider 自己
-        if (other.CompareTag("HandHold"))
-        {
-            holdType = FootHoldType.Normal;
-            holdRoot = other.transform;
-            return true;
-        }
-
         if (other.CompareTag("LongHandHold"))
         {
             holdType = FootHoldType.Long;
@@ -237,13 +239,6 @@ public class FootPlant : MonoBehaviour
 
         while (parent != null)
         {
-            if (parent.CompareTag("HandHold"))
-            {
-                holdType = FootHoldType.Normal;
-                holdRoot = parent;
-                return true;
-            }
-
             if (parent.CompareTag("LongHandHold"))
             {
                 holdType = FootHoldType.Long;
@@ -273,7 +268,7 @@ public class FootPlant : MonoBehaviour
         candidateFootHold = null;
         candidateFootCollider = null;
 
-        candidateHoldType = FootHoldType.Normal;
-        currentHoldType = FootHoldType.Normal;
+        candidateHoldType = FootHoldType.Long;
+        currentHoldType = FootHoldType.Long;
     }
 }
