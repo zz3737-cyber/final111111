@@ -24208,6 +24208,7 @@ GameObject:
   - component: {fileID: 1833191028}
   - component: {fileID: 1833191027}
   - component: {fileID: 1833191031}
+  - component: {fileID: 1833191032}
   m_Layer: 0
   m_Name: cake15
   m_TagString: LongHandHold
@@ -24396,6 +24397,21 @@ MonoBehaviour:
   fruitType: 1
   armStrengthBonus: 5
   staminaBonus: 5
+--- !u!114 &1833191032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1833191025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aff8b6a1a1b8c3843a7908baf43375bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PulseScale
+  minScale: 120
+  maxScale: 150
+  speed: 2
 --- !u!1 &1845989077
 GameObject:
   m_ObjectHideFlags: 0
