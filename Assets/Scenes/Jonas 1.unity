@@ -4774,7 +4774,7 @@ Transform:
   m_GameObject: {fileID: 461941327}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: 0.0054001394, w: 0.99998546}
-  m_LocalPosition: {x: -31.97, y: -16.85, z: 0}
+  m_LocalPosition: {x: -23.8, y: -79.1, z: 0}
   m_LocalScale: {x: 33.6, y: 33.6, z: 33.6}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -20361,7 +20361,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -39.81, y: 128.06}
+  m_AnchoredPosition: {x: 800, y: 128.06}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1511730215
@@ -21378,7 +21378,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -39.81, y: 128.06}
+  m_AnchoredPosition: {x: 800, y: 128.06}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1592975911
@@ -24506,7 +24506,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0}
   m_AnchorMax: {x: 0.5, y: 0}
-  m_AnchoredPosition: {x: -39.81, y: 128.06}
+  m_AnchoredPosition: {x: 800, y: 128.06}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &1863659434
@@ -25524,7 +25524,7 @@ Transform:
   m_GameObject: {fileID: 1964739178}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -31.7, y: -31, z: -10}
+  m_LocalPosition: {x: -31.94, y: -29.86, z: -10}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -25591,6 +25591,8 @@ MonoBehaviour:
   followY: 1
   smoothSpeed: 5
   offset: {x: 0, y: 0, z: -10}
+  useMinYOnly: 1
+  cameraMinY: -29.86
   useBounds: 0
   minX: -10
   maxX: 10
@@ -28946,11 +28948,11 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 2499713869945081665, guid: cf0b7f0290fca05498048e827f560fc9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -31.3
+      value: -31.63
       objectReference: {fileID: 0}
     - target: {fileID: 2499713869945081665, guid: cf0b7f0290fca05498048e827f560fc9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -31.8
+      value: -35.28
       objectReference: {fileID: 0}
     - target: {fileID: 2499713869945081665, guid: cf0b7f0290fca05498048e827f560fc9, type: 3}
       propertyPath: m_LocalPosition.z
@@ -28988,13 +28990,25 @@ PrefabInstance:
       propertyPath: 'forbiddenZones.Array.data[0]'
       value: 
       objectReference: {fileID: 285971865}
+    - target: {fileID: 3298238860534220243, guid: cf0b7f0290fca05498048e827f560fc9, type: 3}
+      propertyPath: m_LayerOverridePriority
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 4270983505509028690, guid: cf0b7f0290fca05498048e827f560fc9, type: 3}
       propertyPath: 'forbiddenZones.Array.data[0]'
       value: 
       objectReference: {fileID: 285971865}
+    - target: {fileID: 4381157142265816412, guid: cf0b7f0290fca05498048e827f560fc9, type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 5387373635051130221, guid: cf0b7f0290fca05498048e827f560fc9, type: 3}
       propertyPath: m_Name
       value: "\u8EAB\u4F53"
+      objectReference: {fileID: 0}
+    - target: {fileID: 6348738903945688345, guid: cf0b7f0290fca05498048e827f560fc9, type: 3}
+      propertyPath: minY
+      value: -35
       objectReference: {fileID: 0}
     - target: {fileID: 6348738903945688345, guid: cf0b7f0290fca05498048e827f560fc9, type: 3}
       propertyPath: leftGamepadInput
@@ -29004,14 +29018,30 @@ PrefabInstance:
       propertyPath: rightGamepadInput
       value: 
       objectReference: {fileID: 151380528}
+    - target: {fileID: 6748331723689184295, guid: cf0b7f0290fca05498048e827f560fc9, type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 7097502984013568559, guid: cf0b7f0290fca05498048e827f560fc9, type: 3}
       propertyPath: 'forbiddenZones.Array.data[0]'
       value: 
       objectReference: {fileID: 285971865}
+    - target: {fileID: 7990911074956900800, guid: cf0b7f0290fca05498048e827f560fc9, type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
+      objectReference: {fileID: 0}
+    - target: {fileID: 8234618331805516401, guid: cf0b7f0290fca05498048e827f560fc9, type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
+      objectReference: {fileID: 0}
     - target: {fileID: 8652634409663250737, guid: cf0b7f0290fca05498048e827f560fc9, type: 3}
       propertyPath: 'forbiddenZones.Array.data[0]'
       value: 
       objectReference: {fileID: 285971865}
+    - target: {fileID: 9053261135091694378, guid: cf0b7f0290fca05498048e827f560fc9, type: 3}
+      propertyPath: m_SortingOrder
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
