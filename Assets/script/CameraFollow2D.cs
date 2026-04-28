@@ -13,6 +13,10 @@ public class CameraFollow2D : MonoBehaviour
     [Header("Offset")]
     public Vector3 offset = new Vector3(0f, 0f, -10f);
 
+    [Header("Min Y Only")]
+    public bool useMinYOnly = true;
+    public float cameraMinY = 0f;
+
     [Header("Camera Bounds")]
     public bool useBounds = false;
     public float minX = -10f;
@@ -37,6 +41,13 @@ public class CameraFollow2D : MonoBehaviour
             targetPos.y = currentPos.y;
         }
 
+        // 只限制最低 Y，不限制最高 Y / X
+        if (useMinYOnly)
+        {
+            targetPos.y = Mathf.Max(targetPos.y, cameraMinY);
+        }
+
+        // 如果你想完整限制相机范围，再打开 useBounds
         if (useBounds)
         {
             targetPos.x = Mathf.Clamp(targetPos.x, minX, maxX);
