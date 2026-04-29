@@ -9179,6 +9179,7 @@ GameObject:
   - component: {fileID: 1874079725}
   - component: {fileID: 1874079729}
   - component: {fileID: 1874079728}
+  - component: {fileID: 1874079730}
   m_Layer: 8
   m_Name: "\u5C3E\u5DF4"
   m_TagString: Untagged
@@ -10616,6 +10617,19 @@ PolygonCollider2D:
       - {x: 10.76, y: -54.34}
       - {x: 10.7699995, y: -54.329998}
   m_UseDelaunayMesh: 1
+--- !u!114 &1874079730
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1874079723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bcf0433ca532d0e4d83d1625e7ae1f56, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::TailHitRelay
+  bossTailSweep: {fileID: 273511847}
 --- !u!1 &1887820326
 GameObject:
   m_ObjectHideFlags: 0
