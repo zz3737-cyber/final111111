@@ -80,7 +80,7 @@ public class StartSceneManager : MonoBehaviour
 
         SequenceStep step = steps[currentStepIndex];
 
-        HideAllStepImages();
+        //HideAllStepImages();
 
         switch (step.stepType)
         {

@@ -27,6 +27,10 @@ public class FootPlant : MonoBehaviour
     [Header("Debug")]
     public bool debugLog = false;
 
+    [Header("Plant Disable")]
+    public bool plantDisabled = false;
+    private float plantDisableTimer = 0f;
+
     private Transform candidateFootHold;
     private Collider2D candidateFootCollider;
 
@@ -46,6 +50,19 @@ public class FootPlant : MonoBehaviour
 
     void Update()
     {
+        if (plantDisabled)
+        {
+            plantDisableTimer -= Time.deltaTime;
+
+            if (plantDisableTimer <= 0f)
+            {
+                plantDisabled = false;
+            }
+
+            ReleaseFoot();
+            return;
+        }
+
         Vector2 inputDir = GetInputDirection();
 
         // 还没踩住时，碰到候选长点 / 滑点就自动吸附
@@ -73,12 +90,7 @@ public class FootPlant : MonoBehaviour
         currentHoldType = candidateHoldType;
         plantedTime = Time.time;
 
-        // 关键：用实际碰到的 Collider2D 算最近表面点
-        // 这样 PolygonCollider2D / BoxCollider2D 都能用
         Vector3 closestWorldPoint = currentHoldCollider.ClosestPoint(transform.position);
-
-        // 记录在 holdRoot 的局部坐标里
-        // 如果 Tag 在父物体上，Collider 在子物体上，也能跟随父物体
         localFootPoint = currentFootHold.InverseTransformPoint(closestWorldPoint);
 
         if (debugLog)
@@ -100,7 +112,6 @@ public class FootPlant : MonoBehaviour
             return;
         }
 
-        // 长点 / 滑点：脚固定在实际踩到的位置，不吸到中心
         transform.position = currentFootHold.TransformPoint(localFootPoint);
     }
 
@@ -123,14 +134,11 @@ public class FootPlant : MonoBehaviour
 
     void CheckInputDetach(Vector2 inputDir)
     {
-        // 刚吸上的一小段时间内不允许因为输入立刻脱离
         if (Time.time - plantedTime <= minLockTime) return;
-
         if (inputDir.magnitude <= 0.2f) return;
         if (hipPivot == null) return;
 
         Vector2 footToHip = ((Vector2)hipPivot.position - (Vector2)transform.position).normalized;
-
         float dot = Vector2.Dot(inputDir.normalized, footToHip);
 
         if (dot > detachInputThreshold)
@@ -168,7 +176,6 @@ public class FootPlant : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D other)
     {
-        // 防止脚一开始就在 collider 里面，Enter 没触发
         if (!isPlanted && candidateFootHold == null)
         {
             TrySetCandidate(other);
@@ -192,7 +199,7 @@ public class FootPlant : MonoBehaviour
 
     void TrySetCandidate(Collider2D other)
     {
-        if (isPlanted) return;
+        if (isPlanted || plantDisabled) return;
 
         FootHoldType holdType;
         Transform holdRoot;
@@ -219,7 +226,6 @@ public class FootPlant : MonoBehaviour
         holdType = FootHoldType.Long;
         holdRoot = null;
 
-        // 先检查 collider 自己
         if (other.CompareTag("LongHandHold"))
         {
             holdType = FootHoldType.Long;
@@ -234,7 +240,6 @@ public class FootPlant : MonoBehaviour
             return true;
         }
 
-        // 再检查父物体，防止 collider 在子物体上，Tag 在父物体上
         Transform parent = other.transform.parent;
 
         while (parent != null)
@@ -257,6 +262,13 @@ public class FootPlant : MonoBehaviour
         }
 
         return false;
+    }
+
+    public void DisablePlant(float duration)
+    {
+        plantDisabled = true;
+        plantDisableTimer = duration;
+        ReleaseFoot();
     }
 
     public void ReleaseFoot()
