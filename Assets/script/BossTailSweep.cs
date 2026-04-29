@@ -28,9 +28,9 @@ public class BossTailSweep : MonoBehaviour
         limbSensorLayer = LayerMask.NameToLayer("LimbSensor");
 
         if (warningSprite != null) warningSprite.SetActive(false);
-        if (sweepSprite != null) sweepSprite.SetActive(false);
+        if (sweepSprite != null) sweepSprite.SetActive(true);
 
-        transform.localRotation = Quaternion.Euler(0f, 0f, startAngle);
+        transform.localRotation = Quaternion.Euler(0f, 0f, 0f);
     }
 
     public void StartTailSweep()
