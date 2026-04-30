@@ -7,6 +7,10 @@ public class PlayerFruitReceiver : MonoBehaviour
     public HandGrip leftHandGrip;
     public HandGrip rightHandGrip;
 
+    [Header("Antidote")]
+    public int antidoteCount = 0;
+    public int antidotesToEndGame = 3;
+
     public void AddArmStrength(float amount)
     {
         if (gripMotor != null)
@@ -31,5 +35,24 @@ public class PlayerFruitReceiver : MonoBehaviour
         }
 
         Debug.Log("Stamina increased by: " + amount);
+    }
+
+    public void AddAntidote()
+    {
+        antidoteCount++;
+
+        Debug.Log("Antidote collected: " + antidoteCount + " / " + antidotesToEndGame);
+
+        if (antidoteCount >= antidotesToEndGame)
+        {
+            if (GameEndManager.Instance != null)
+            {
+                GameEndManager.Instance.EndGame();
+            }
+            else
+            {
+                Debug.Log("Game End! Collected all antidotes.");
+            }
+        }
     }
 }
