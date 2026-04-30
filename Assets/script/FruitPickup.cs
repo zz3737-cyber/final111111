@@ -33,14 +33,20 @@ public class FruitPickup : MonoBehaviour
         {
             case FruitType.ArmStrength:
                 receiver.AddArmStrength(armStrengthBonus);
+                if (GameManager.instance != null)
+                    GameManager.instance.ShowText("Arm Strength Up!");
                 break;
 
             case FruitType.Stamina:
                 receiver.AddStamina(staminaBonus);
+                if (GameManager.instance != null)
+                    GameManager.instance.ShowText("Stamina Up!");
                 break;
 
             case FruitType.Antidote:
                 receiver.AddAntidote();
+                if (GameManager.instance != null)
+                    GameManager.instance.ShowText("Antidote Collected!");
                 break;
         }
 
