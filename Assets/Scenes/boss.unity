@@ -914,11 +914,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2499713869945081665, guid: cf0b7f0290fca05498048e827f560fc9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.79
+      value: -0.3
       objectReference: {fileID: 0}
     - target: {fileID: 2499713869945081665, guid: cf0b7f0290fca05498048e827f560fc9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -20.4
+      value: -13.7
       objectReference: {fileID: 0}
     - target: {fileID: 2499713869945081665, guid: cf0b7f0290fca05498048e827f560fc9, type: 3}
       propertyPath: m_LocalPosition.z
@@ -1846,6 +1846,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::BossTailSweep
   warningSprite: {fileID: 1056666306}
   sweepSprite: {fileID: 1874079723}
+  audioSource: {fileID: 1831774797}
+  warningClip: {fileID: 8300000, guid: c4c29cc9724635749a57b9c2a69fefd3, type: 3}
+  sweepClip: {fileID: 8300000, guid: b1296a7ebc9c95943b0c03ec7488d7ff, type: 3}
   warningTime: 3
   sweepDuration: 1
   cooldown: 1.5
@@ -5274,7 +5277,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_MaskInteraction: 0
   m_Sprite: {fileID: -2413806693520163455, guid: a86470a33a6bf42c4b3595704624658b, type: 3}
   m_Color: {r: 0.9056604, g: 0.36311856, b: 0.36311856, a: 0.4117647}
@@ -7782,7 +7785,7 @@ SpriteRenderer:
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 2
+  m_SortingOrder: 3
   m_MaskInteraction: 0
   m_Sprite: {fileID: 21300000, guid: 64656169efde4fe40849e5fd1e4c9afe, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}

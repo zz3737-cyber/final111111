@@ -7,6 +7,11 @@ public class BossTailSweep : MonoBehaviour
     public GameObject warningSprite;
     public GameObject sweepSprite;
 
+    [Header("Audio")]
+    public AudioSource audioSource;
+    public AudioClip warningClip;
+    public AudioClip sweepClip;
+
     [Header("Sweep Settings")]
     public float warningTime = 2f;
     public float sweepDuration = 1f;
@@ -47,10 +52,20 @@ public class BossTailSweep : MonoBehaviour
 
         transform.localRotation = Quaternion.Euler(0f, 0f, startAngle);
 
+        if (audioSource != null && warningClip != null)
+        {
+            audioSource.PlayOneShot(warningClip);
+        }
+
         if (warningSprite != null) warningSprite.SetActive(true);
         if (sweepSprite != null) sweepSprite.SetActive(false);
 
         yield return new WaitForSeconds(warningTime);
+
+        if (audioSource != null && sweepClip != null)
+        {
+            audioSource.PlayOneShot(sweepClip);
+        }
 
         if (warningSprite != null) warningSprite.SetActive(false);
         if (sweepSprite != null) sweepSprite.SetActive(true);
