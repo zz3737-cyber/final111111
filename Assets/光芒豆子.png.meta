@@ -1,13 +1,13 @@
 fileFormatVersion: 2
-guid: 990e9f5d820ef154db3821222bd56800
+guid: 0acdfa2127ca69d48b59577cada4e205
 TextureImporter:
   internalIDToNameTable:
   - first:
-      213: -520255251818103102
-    second: "ChatGPT_Image_2026\u5E744\u670829\u65E5_20_37_46-removebg-preview_0"
+      213: -8256275812734207791
+    second: "\u5149\u8292\u8C46\u5B50_0"
   - first:
-      213: 4503637147320951184
-    second: "ChatGPT_Image_2026\u5E744\u670829\u65E5_20_37_46-removebg-preview_1"
+      213: -447693176785588117
+    second: "\u5149\u8292\u8C46\u5B50_1"
   externalObjects: {}
   serializedVersion: 13
   mipmaps:
@@ -49,13 +49,13 @@ TextureImporter:
   nPOTScale: 0
   lightmap: 0
   compressionQuality: 50
-  spriteMode: 2
+  spriteMode: 1
   spriteExtrude: 1
   spriteMeshType: 1
   alignment: 0
   spritePivot: {x: 0.5, y: 0.5}
   spritePixelsToUnits: 100
-  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteBorder: {x: 1286, y: 1631, z: 3413, w: 525}
   spriteGenerateFallbackPhysicsShape: 1
   alphaUsage: 1
   alphaIsTransparency: 1
@@ -101,14 +101,14 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   - serializedVersion: 4
     buildTarget: WebGL
-    maxTextureSize: 16384
+    maxTextureSize: 2048
     resizeAlgorithm: 0
-    textureFormat: 12
+    textureFormat: -1
     textureCompression: 1
     compressionQuality: 50
     crunchedCompression: 0
     allowsAlphaSplitting: 0
-    overridden: 1
+    overridden: 0
     ignorePlatformSupport: 0
     androidETC2FallbackOverride: 0
     forceMaximumCompressionQuality_BC6H_BC7: 0
@@ -116,45 +116,45 @@ TextureImporter:
     serializedVersion: 2
     sprites:
     - serializedVersion: 2
-      name: "ChatGPT_Image_2026\u5E744\u670829\u65E5_20_37_46-removebg-preview_0"
+      name: "\u5149\u8292\u8C46\u5B50_0"
       rect:
         serializedVersion: 2
-        x: 43
-        y: 145
-        width: 185
-        height: 212
+        x: 1194
+        y: 1527
+        width: 1646
+        height: 1508
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 2ceb9dada9ea7c8f0800000000000000
-      internalID: -520255251818103102
+      spriteID: 1d8f35654e0db6d80800000000000000
+      internalID: -8256275812734207791
       vertices: []
       indices: 
       edges: []
       weights: []
     - serializedVersion: 2
-      name: "ChatGPT_Image_2026\u5E744\u670829\u65E5_20_37_46-removebg-preview_1"
+      name: "\u5149\u8292\u8C46\u5B50_1"
       rect:
         serializedVersion: 2
-        x: 269
-        y: 144
-        width: 187
-        height: 213
+        x: 2530
+        y: 1526
+        width: 40
+        height: 39
       alignment: 0
-      pivot: {x: 0, y: 0}
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       customData: 
       outline: []
       physicsShape: []
       tessellationDetail: -1
       bones: []
-      spriteID: 091a15bcf12208e30800000000000000
-      internalID: 4503637147320951184
+      spriteID: b60345d7d6979c9f0800000000000000
+      internalID: -447693176785588117
       vertices: []
       indices: 
       edges: []
@@ -163,8 +163,8 @@ TextureImporter:
     customData: 
     physicsShape: []
     bones: []
-    spriteID: 
-    internalID: 0
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 1537655665
     vertices: []
     indices: 
     edges: []
@@ -173,8 +173,8 @@ TextureImporter:
     spriteCustomMetadata:
       entries: []
     nameFileIdTable:
-      "ChatGPT_Image_2026\u5E744\u670829\u65E5_20_37_46-removebg-preview_0": -520255251818103102
-      "ChatGPT_Image_2026\u5E744\u670829\u65E5_20_37_46-removebg-preview_1": 4503637147320951184
+      "\u5149\u8292\u8C46\u5B50_0": -8256275812734207791
+      "\u5149\u8292\u8C46\u5B50_1": -447693176785588117
   mipmapLimitGroupName: 
   pSDRemoveMatte: 0
   userData: 

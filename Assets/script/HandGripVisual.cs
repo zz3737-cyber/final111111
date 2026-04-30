@@ -12,6 +12,8 @@ public class HandGripVisual : MonoBehaviour
     public Sprite normalHandSprite;
     public Sprite grippingHandSprite;
 
+    private bool lastGripState;
+
     void Start()
     {
         if (handRenderer == null)
@@ -19,19 +21,26 @@ public class HandGripVisual : MonoBehaviour
             handRenderer = GetComponent<SpriteRenderer>();
         }
 
-        UpdateSprite();
+        lastGripState = false;
+        UpdateSprite(true);
     }
 
     void Update()
     {
-        UpdateSprite();
+        UpdateSprite(false);
     }
 
-    void UpdateSprite()
+    void UpdateSprite(bool forceUpdate)
     {
         if (handGrip == null || handRenderer == null) return;
 
-        if (handGrip.isGripping)
+        bool gripping = handGrip.isGripping;
+
+        if (!forceUpdate && gripping == lastGripState) return;
+
+        lastGripState = gripping;
+
+        if (gripping)
         {
             if (grippingHandSprite != null)
             {
