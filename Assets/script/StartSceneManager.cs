@@ -48,6 +48,9 @@ public class StartSceneManager : MonoBehaviour
     [Header("Cleanup")]
     public int keepRecentSteps = 5;
 
+    [Header("Title")]
+    public GameObject titleObject;
+
     private int currentStepIndex = -1;
     private bool inputLocked = false;
 
@@ -73,6 +76,9 @@ public class StartSceneManager : MonoBehaviour
     {
         currentStepIndex++;
 
+        if (currentStepIndex == 0 && titleObject != null)
+            titleObject.SetActive(false);
+
         if (currentStepIndex >= steps.Count)
         {
             SceneManager.LoadScene(gameSceneName);
@@ -82,7 +88,6 @@ public class StartSceneManager : MonoBehaviour
         if (pressAText != null)
             pressAText.SetActive(false);
 
-        // Destroy the step that is 5 behind the current one
         int oldStepIndex = currentStepIndex - keepRecentSteps;
         if (oldStepIndex >= 0)
         {
