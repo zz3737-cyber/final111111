@@ -33,6 +33,7 @@ public class StartSceneManager : MonoBehaviour
 
         [Header("Animation")]
         public float duration = 1.5f;
+
     }
 
     [Header("UI")]
@@ -43,6 +44,9 @@ public class StartSceneManager : MonoBehaviour
 
     [Header("Scene")]
     public string gameSceneName = "GameScene";
+
+    [Header("Cleanup")]
+    public int keepRecentSteps = 5;
 
     private int currentStepIndex = -1;
     private bool inputLocked = false;
@@ -78,9 +82,14 @@ public class StartSceneManager : MonoBehaviour
         if (pressAText != null)
             pressAText.SetActive(false);
 
-        SequenceStep step = steps[currentStepIndex];
+        // Destroy the step that is 5 behind the current one
+        int oldStepIndex = currentStepIndex - keepRecentSteps;
+        if (oldStepIndex >= 0)
+        {
+            DestroyStepVisuals(oldStepIndex);
+        }
 
-        HideAllStepImages();
+        SequenceStep step = steps[currentStepIndex];
 
         switch (step.stepType)
         {
@@ -210,6 +219,27 @@ public class StartSceneManager : MonoBehaviour
 
             if (step.targetImage2 != null)
                 step.targetImage2.gameObject.SetActive(false);
+        }
+    }
+
+    private void DestroyStepVisuals(int stepIndex)
+    {
+        if (stepIndex < 0 || stepIndex >= steps.Count) return;
+
+        SequenceStep oldStep = steps[stepIndex];
+
+        if (oldStep.targetImage != null)
+        {
+            Destroy(oldStep.targetImage.gameObject);
+            oldStep.targetImage = null;
+        }
+
+        if (oldStep.targetImage2 != null)
+        {
+            if (oldStep.targetImage2 != oldStep.targetImage)
+                Destroy(oldStep.targetImage2.gameObject);
+
+            oldStep.targetImage2 = null;
         }
     }
 }
