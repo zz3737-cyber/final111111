@@ -2139,7 +2139,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &167576667
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -13022,7 +13022,7 @@ Transform:
   m_GameObject: {fileID: 948051564}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -23.7, y: 10.9, z: 0}
+  m_LocalPosition: {x: -23.6, y: 7.49, z: 0}
   m_LocalScale: {x: 0.41999996, y: 0.41999996, z: 0.41999996}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -26653,7 +26653,7 @@ Camera:
   far clip plane: 1000
   field of view: 46
   orthographic: 1
-  orthographic size: 5.29
+  orthographic size: 5.9
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
@@ -28470,8 +28470,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::FruitPickup
   fruitType: 0
-  armStrengthBonus: 5
-  staminaBonus: 5
+  armStrengthBonus: 2.72
+  staminaBonus: 3
 --- !u!61 &2017185484
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -28601,7 +28601,7 @@ SpriteRenderer:
   m_SortingOrder: 0
   m_MaskInteraction: 0
   m_Sprite: {fileID: -4046321881802987761, guid: a0b9d31860a716d4e8c316dc3d904c52, type: 3}
-  m_Color: {r: 1, g: 1, b: 1, a: 0.53333336}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -30510,11 +30510,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2499713869945081665, guid: cf0b7f0290fca05498048e827f560fc9, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 19.8
+      value: -31.93
       objectReference: {fileID: 0}
     - target: {fileID: 2499713869945081665, guid: cf0b7f0290fca05498048e827f560fc9, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 28.8
+      value: -35.4
       objectReference: {fileID: 0}
     - target: {fileID: 2499713869945081665, guid: cf0b7f0290fca05498048e827f560fc9, type: 3}
       propertyPath: m_LocalPosition.z
