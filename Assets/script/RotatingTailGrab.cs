@@ -1,5 +1,4 @@
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 
 public class RotatingTailGrab : MonoBehaviour
@@ -9,12 +8,12 @@ public class RotatingTailGrab : MonoBehaviour
     public float rotateAngle = 60f;
     public float rotateSpeed = 2f;
 
-    [Header("Grab")]
-    public float grabDuration = 2f;
+    [Header("Stay Collision")]
+    public float stayDuration = 3f;
     public string sceneToLoad = "GameOverScene";
 
-    private bool playerInRange = false;
-    private float grabTimer = 0f;
+    private float stayTimer = 0f;
+    private bool isTouching = false;
     private Quaternion tailStartLocalRotation;
 
     void Start()
@@ -31,39 +30,29 @@ public class RotatingTailGrab : MonoBehaviour
             tailToRotate.localRotation = tailStartLocalRotation * Quaternion.Euler(0f, 0f, angle);
         }
 
-        if (!playerInRange)
+        if (isTouching)
         {
-            grabTimer = 0f;
-            return;
-        }
+            stayTimer += Time.deltaTime;
 
-        if (Gamepad.current != null && Gamepad.current.leftTrigger.isPressed)
-        {
-            grabTimer += Time.deltaTime;
-
-            if (grabTimer >= grabDuration)
+            if (stayTimer >= stayDuration)
             {
                 SceneManager.LoadScene(sceneToLoad);
             }
         }
         else
         {
-            grabTimer = 0f;
+            stayTimer = 0f;
         }
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
-            playerInRange = true;
+        isTouching = true;
     }
 
     private void OnTriggerExit2D(Collider2D other)
     {
-        if (other.CompareTag("Player"))
-        {
-            playerInRange = false;
-            grabTimer = 0f;
-        }
+        isTouching = false;
+        stayTimer = 0f;
     }
 }
