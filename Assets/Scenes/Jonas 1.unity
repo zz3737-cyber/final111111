@@ -9863,9 +9863,9 @@ MonoBehaviour:
   handGrabClip: {fileID: 8300000, guid: 210ee3e4039d0154eb94d073c1ec31a7, type: 3}
   fruitPickupClip: {fileID: 8300000, guid: 9b780e15b57a67f4a88d323c7e45cf23, type: 3}
   checkpointClip: {fileID: 8300000, guid: cec76cde0e22c5d4089e1248ef2df71a, type: 3}
-  deathClip: {fileID: 8300000, guid: 523b8241fe001d343a57c31b528c24ce, type: 3}
-  respawnClip: {fileID: 8300000, guid: a69eff06cd9c1eb44939e66935136c9c, type: 3}
-  bgmClip: {fileID: 0}
+  deathClip: {fileID: 8300000, guid: 8ffdfb144dcb30446acdf855c058364a, type: 3}
+  respawnClip: {fileID: 0}
+  bgmClip: {fileID: 8300000, guid: 482500be1809b88468fd5219460bbdaf, type: 3}
   playBgmOnStart: 1
   sfxVolume: 1
   bgmVolume: 0.4
@@ -13805,7 +13805,7 @@ MonoBehaviour:
   tailToRotate: {fileID: 424106613}
   rotateAngle: 60
   rotateSpeed: 1
-  grabDuration: 2
+  stayDuration: 3
   sceneToLoad: boss
 --- !u!114 &1006181247
 MonoBehaviour:
