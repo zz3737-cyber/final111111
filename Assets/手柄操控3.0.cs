@@ -164,7 +164,7 @@ public partial class @ClimberInputActions: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""369f1c42-9dcb-40db-9f54-c69bc90b08f1"",
-                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""path"": ""<Gamepad>/leftTrigger"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
