@@ -5,13 +5,18 @@ public class RightSideGamepadInput : MonoBehaviour
 {
     public Vector2 handMove;
     public Vector2 footMove;
+
     public bool gripHeld;
+    public bool footPlantHeld;
 
     [Header("Gamepad Index")]
     public int gamepadIndex = 1;
 
     [Header("Dead Zone")]
     public float deadZone = 0.2f;
+
+    [Header("Trigger Threshold")]
+    public float triggerThreshold = 0.2f;
 
     void Update()
     {
@@ -20,6 +25,7 @@ public class RightSideGamepadInput : MonoBehaviour
             handMove = Vector2.zero;
             footMove = Vector2.zero;
             gripHeld = false;
+            footPlantHeld = false;
             return;
         }
 
@@ -27,7 +33,12 @@ public class RightSideGamepadInput : MonoBehaviour
 
         handMove = pad.leftStick.ReadValue();
         footMove = pad.rightStick.ReadValue();
-        gripHeld = pad.rightTrigger.isPressed;
+
+        // LT：手抓
+        gripHeld = pad.leftTrigger.ReadValue() > triggerThreshold;
+
+        // RT：脚吸附 / 脚踩住
+        footPlantHeld = pad.rightTrigger.ReadValue() > triggerThreshold;
 
         if (handMove.magnitude < deadZone) handMove = Vector2.zero;
         if (footMove.magnitude < deadZone) footMove = Vector2.zero;

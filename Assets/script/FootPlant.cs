@@ -14,9 +14,17 @@ public class FootPlant : MonoBehaviour
     public float detachInputThreshold = 0.85f;
     public float minLockTime = 0.25f;
 
+    [Header("Plant Button")]
+    public bool requirePlantButton = true;
+    public KeyCode keyboardPlantKey = KeyCode.E;
+
     [Header("External Input")]
     public bool useExternalInput = false;
     public Vector2 externalInput;
+
+    [Header("External Plant Button")]
+    public bool useExternalPlantButton = false;
+    public bool externalPlantHeld = false;
 
     [Header("Keyboard Input")]
     public KeyCode upKey;
@@ -24,12 +32,12 @@ public class FootPlant : MonoBehaviour
     public KeyCode leftKey;
     public KeyCode rightKey;
 
-    [Header("Debug")]
-    public bool debugLog = false;
-
     [Header("Plant Disable")]
     public bool plantDisabled = false;
     private float plantDisableTimer = 0f;
+
+    [Header("Debug")]
+    public bool debugLog = false;
 
     private Transform candidateFootHold;
     private Collider2D candidateFootCollider;
@@ -50,6 +58,7 @@ public class FootPlant : MonoBehaviour
 
     void Update()
     {
+        // 被 Boss 或其他机制临时禁用脚吸附
         if (plantDisabled)
         {
             plantDisableTimer -= Time.deltaTime;
@@ -64,19 +73,28 @@ public class FootPlant : MonoBehaviour
         }
 
         Vector2 inputDir = GetInputDirection();
+        bool plantHeld = IsPlantHeld();
 
-        // 还没踩住时，碰到候选长点 / 滑点就自动吸附
-        if (candidateFootHold != null && candidateFootCollider != null && !isPlanted)
+        // 没踩住时：碰到候选点，并且按住踩点键 / 右扳机，才吸附
+        if (candidateFootHold != null &&
+            candidateFootCollider != null &&
+            !isPlanted &&
+            plantHeld)
         {
             PlantFoot();
+        }
+
+        // 已经踩住时：如果松开踩点键 / 右扳机，就松脚
+        if (isPlanted && requirePlantButton && !plantHeld)
+        {
+            ReleaseFoot();
+            return;
         }
 
         if (isPlanted && currentFootHold != null)
         {
             UpdatePlantedPosition();
-
             CheckLegStretch();
-
             CheckInputDetach(inputDir);
         }
     }
@@ -90,7 +108,12 @@ public class FootPlant : MonoBehaviour
         currentHoldType = candidateHoldType;
         plantedTime = Time.time;
 
+        // 关键：用实际碰到的 Collider2D 算最近表面点
+        // 支持 PolygonCollider2D / BoxCollider2D / 任意 Collider2D
         Vector3 closestWorldPoint = currentHoldCollider.ClosestPoint(transform.position);
+
+        // 记录在 holdRoot 的局部坐标里
+        // 如果 Tag 在父物体上，Collider 在子物体上，也能跟随父物体
         localFootPoint = currentFootHold.InverseTransformPoint(closestWorldPoint);
 
         if (debugLog)
@@ -112,6 +135,7 @@ public class FootPlant : MonoBehaviour
             return;
         }
 
+        // 长点 / 滑点：脚固定在实际踩到的位置，不吸到中心
         transform.position = currentFootHold.TransformPoint(localFootPoint);
     }
 
@@ -134,11 +158,13 @@ public class FootPlant : MonoBehaviour
 
     void CheckInputDetach(Vector2 inputDir)
     {
+        // 刚吸上的一小段时间内，不允许因为输入立刻脱离
         if (Time.time - plantedTime <= minLockTime) return;
         if (inputDir.magnitude <= 0.2f) return;
         if (hipPivot == null) return;
 
         Vector2 footToHip = ((Vector2)hipPivot.position - (Vector2)transform.position).normalized;
+
         float dot = Vector2.Dot(inputDir.normalized, footToHip);
 
         if (dot > detachInputThreshold)
@@ -150,6 +176,28 @@ public class FootPlant : MonoBehaviour
 
             ReleaseFoot();
         }
+    }
+
+    bool IsPlantHeld()
+    {
+        if (!requirePlantButton)
+        {
+            return true;
+        }
+
+        bool held = false;
+
+        if (useExternalPlantButton)
+        {
+            held = externalPlantHeld;
+        }
+
+        if (Input.GetKey(keyboardPlantKey))
+        {
+            held = true;
+        }
+
+        return held;
     }
 
     Vector2 GetInputDirection()
@@ -176,6 +224,7 @@ public class FootPlant : MonoBehaviour
 
     void OnTriggerStay2D(Collider2D other)
     {
+        // 防止脚一开始就在 collider 里面，Enter 没触发
         if (!isPlanted && candidateFootHold == null)
         {
             TrySetCandidate(other);
@@ -199,13 +248,16 @@ public class FootPlant : MonoBehaviour
 
     void TrySetCandidate(Collider2D other)
     {
-        if (isPlanted || plantDisabled) return;
+        if (isPlanted) return;
+        if (plantDisabled) return;
 
         FootHoldType holdType;
         Transform holdRoot;
 
         if (!TryGetHoldInfo(other, out holdType, out holdRoot))
+        {
             return;
+        }
 
         candidateFootHold = holdRoot;
         candidateFootCollider = other;
@@ -226,6 +278,7 @@ public class FootPlant : MonoBehaviour
         holdType = FootHoldType.Long;
         holdRoot = null;
 
+        // 只认长点和滑点
         if (other.CompareTag("LongHandHold"))
         {
             holdType = FootHoldType.Long;
@@ -240,6 +293,7 @@ public class FootPlant : MonoBehaviour
             return true;
         }
 
+        // 支持 Collider 在子物体上，Tag 在父物体上
         Transform parent = other.transform.parent;
 
         while (parent != null)
