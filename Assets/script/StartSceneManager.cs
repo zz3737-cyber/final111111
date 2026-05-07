@@ -64,9 +64,19 @@ public class StartSceneManager : MonoBehaviour
 
     private void Update()
     {
+        if (Gamepad.current == null) return;
+
+        // Press X to skip intro and load game scene
+        if (Gamepad.current.buttonWest.wasPressedThisFrame)
+        {
+            SceneManager.LoadScene(gameSceneName);
+            return;
+        }
+
         if (inputLocked) return;
 
-        if (Gamepad.current != null && Gamepad.current.buttonSouth.wasPressedThisFrame)
+        // Press A to continue
+        if (Gamepad.current.buttonSouth.wasPressedThisFrame)
         {
             PlayNextStep();
         }
