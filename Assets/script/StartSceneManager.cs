@@ -38,6 +38,7 @@ public class StartSceneManager : MonoBehaviour
 
     [Header("UI")]
     public GameObject pressAText;
+    public GameObject skipText;
 
     [Header("Sequence")]
     public List<SequenceStep> steps = new List<SequenceStep>();
@@ -58,6 +59,9 @@ public class StartSceneManager : MonoBehaviour
     {
         if (pressAText != null)
             pressAText.SetActive(true);
+
+        if (skipText != null)
+            skipText.SetActive(false);
 
         HideAllStepImages();
     }
@@ -86,8 +90,14 @@ public class StartSceneManager : MonoBehaviour
     {
         currentStepIndex++;
 
-        if (currentStepIndex == 0 && titleObject != null)
-            titleObject.SetActive(false);
+        if (currentStepIndex == 0)
+        {
+            if (titleObject != null)
+                titleObject.SetActive(false);
+
+            if (skipText != null)
+                skipText.SetActive(true);
+        }
 
         if (currentStepIndex >= steps.Count)
         {
@@ -95,8 +105,8 @@ public class StartSceneManager : MonoBehaviour
             return;
         }
 
-        if (pressAText != null)
-            pressAText.SetActive(false);
+        // if (pressAText != null)
+        //     pressAText.SetActive(false);
 
         int oldStepIndex = currentStepIndex - keepRecentSteps;
         if (oldStepIndex >= 0)

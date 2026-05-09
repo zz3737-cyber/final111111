@@ -8,12 +8,7 @@ public class RotatingTailGrab : MonoBehaviour
     public float rotateAngle = 60f;
     public float rotateSpeed = 2f;
 
-    [Header("Stay Collision")]
-    public float stayDuration = 3f;
-    public string sceneToLoad = "GameOverScene";
 
-    private float stayTimer = 0f;
-    private bool isTouching = false;
     private Quaternion tailStartLocalRotation;
 
     void Start()
@@ -30,29 +25,6 @@ public class RotatingTailGrab : MonoBehaviour
             tailToRotate.localRotation = tailStartLocalRotation * Quaternion.Euler(0f, 0f, angle);
         }
 
-        if (isTouching)
-        {
-            stayTimer += Time.deltaTime;
-
-            if (stayTimer >= stayDuration)
-            {
-                SceneManager.LoadScene(sceneToLoad);
-            }
-        }
-        else
-        {
-            stayTimer = 0f;
-        }
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
-    {
-        isTouching = true;
-    }
-
-    private void OnTriggerExit2D(Collider2D other)
-    {
-        isTouching = false;
-        stayTimer = 0f;
-    }
 }
